@@ -56,12 +56,25 @@ def search_problems(problems):
     except ValueError:
         print("Enter specified choice numbers: ")
 def print_problem(problem):
-    print("Problem Name:",problem["problem_name"],"\nDifficulty: ", problem["difficulty"], "\nTopic: ", problem["topic"], "\nDate: ", problem["date"])               
+    print("Problem Name:",problem["problem_name"],"\nDifficulty: ", problem["difficulty"], "\nTopic: ", problem["topic"], "\nDate: ", problem["date"])   
+def delete_problem(problems):
+    problem_name = input("Enter the Name of the Problem: ")
+    found = False
+    for problem in problems:
+        if problem_name == problem["problem_name"]:
+            problems.remove(problem)    #From the Problems list remove the xyz problem dictionary
+            print("Problem Has been Deleted")
+            found = True
+            save_data(problems)
+            break
+    if not found:
+        print("Problem Does not Exist")
+                      
 problems = load_data()
 while True:
     print("**MENU**")
     try:
-        choice = int(input("Enter your choice:\n1)Add a Problem:\n2)View Problems:\n3)Exit:\n4)Search Problems:"))
+        choice = int(input("Enter your choice:\n1)Add a Problem:\n2)View Problems:\n3)Exit:\n4)Search Problems:\n5)Delete Problem:"))
         if choice == 1:
             add_problem(problems)
             save_data(problems)
@@ -71,6 +84,8 @@ while True:
             view_problems(problems)
         elif choice == 4:
             search_problems(problems)
+        elif choice == 5:
+            delete_problem(problems)
         else:
             print("Invalid Choice")
     except ValueError:
