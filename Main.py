@@ -69,23 +69,47 @@ def delete_problem(problems):
             break
     if not found:
         print("Problem Does not Exist")
+def edit_problem(problems):
+    problem_name = input("Enter the Name of the Problem: ")
+    found = False
+    for problem in problems:
+        if problem_name == problem["problem_name"]:
+            choice = int(input("Enter your choice:\n1)Name:\n2)Difficulty\n3)Topic\n4)Date"))
+            if choice == 1:
+                name = input("Enter the Updated Name of the Problem: ")
+                problem["problem_name"] = name
+            elif choice == 2:
+                difficulty = input("Enter the Updated Difficulty of the Problem: ")
+                problem["difficulty"] = difficulty
+            elif choice == 3:
+                topic = input("Enter the Updated Topic of the Problem: ")
+                problem["topic"] = topic
+            elif choice == 4:
+                date = input("Enter the Updated Date of the Problem: ")
+                problem["date"] = date
+            save_data(problems)
+            print("Problem updated successfully")
+    if not found:
+        print("Problem not Found")
                       
 problems = load_data()
 while True:
     print("**MENU**")
     try:
-        choice = int(input("Enter your choice:\n1)Add a Problem:\n2)View Problems:\n3)Exit:\n4)Search Problems:\n5)Delete Problem:"))
+        choice = int(input("Enter your choice:\n1)Add a Problem:\n2)View Problems:\n3)Search Problems:\n4)Delete Problem:\n5)Edit a Problem\n:6)Exit:\n"))
         if choice == 1:
             add_problem(problems)
             save_data(problems)
-        elif choice == 3:
-            break
         elif choice == 2:
             view_problems(problems)
-        elif choice == 4:
+        elif choice == 3:
             search_problems(problems)
-        elif choice == 5:
+        elif choice == 4:
             delete_problem(problems)
+        elif choice == 5:
+            edit_problem(problems)
+        elif choice == 6:
+            break
         else:
             print("Invalid Choice")
     except ValueError:
