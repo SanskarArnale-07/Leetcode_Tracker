@@ -81,6 +81,7 @@ def edit_problem(problems):
     found = False
     for problem in problems:
         if problem_name == problem["problem_name"]:
+            found = True
             choice = int(input("Enter your choice:\n1)Name:\n2)Difficulty\n3)Topic\n4)Date"))
             if choice == 1:
                 name = input("Enter the Updated Name of the Problem: ")
@@ -96,6 +97,8 @@ def edit_problem(problems):
                 problem["date"] = date
             save_data(problems)
             print("Problem updated successfully")
+            break
+
     if not found:
         print("Problem not Found")
 def statistics(problems):
