@@ -137,8 +137,6 @@ def sort_problems(problems):
         print("Invalid Choice. Enter a Correct Choice. ")
     save_data(problems)
     view_problems(problems)
-    
-    
 problems = load_data()
 while True:
     print("**MENU**")
