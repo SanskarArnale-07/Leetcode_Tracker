@@ -1,4 +1,7 @@
 import json
+import os
+DATA_FILE = os.path.join(os.path.dirname(__file__),"data.json")
+print("Main.py Location", os.path.dirname(os.path.abspath(__file__)))
 problems = []
 def add_problem(problems):
 #Storing all this in dictionary and dictionaries into list
@@ -17,14 +20,15 @@ def get_difficulty():
             return difficulty
         print("Invalid Difficulty. Please Enter Easy, Medium or Hard.")
 def view_problems(problems):
-    for problem in problems:
+    for index , problem in enumerate(problems,start=1):
+        print(index)
         print(problem)
 def save_data(problems):
-    with open("data.json", "w") as f:
+    with open(DATA_FILE, "w") as f:
         json.dump(problems,f)
 def load_data():
     try:
-        with open("data.json", "r") as f:
+        with open(DATA_FILE, "r") as f:
             problems = json.load(f)
             return problems
     except FileNotFoundError:
@@ -114,25 +118,19 @@ def statistics(problems):
     print("Easy Problems Solved: ", easy)
     print("Medium Problems Solved: ", medium)
     print("Hard Problems Solved: ", hard)
-def get_problem_name(problem):
-    return problem["problem_name"]
-def get_topic_name(problem):
-    return problem["topic"]
-def get_date(problem):
-    return problem["date"]
 def get_difficulty_name(problem):
     difficulty_order = {"easy":1, "medium":2, "hard":3}
     return difficulty_order[problem["difficulty"]]
 def sort_problems(problems):
     choice = int(input("Sort By:\n1)Problem Name or 2)Difficulty or 3)Topic or 4)Date\n"))
     if choice == 1:
-        problems.sort(key = get_problem_name)
+        problems.sort(key = lambda problem: problem["problem_name"])
     elif choice == 2:
         problems.sort(key = get_difficulty_name)
     elif choice == 3:
-        problems.sort(key = get_topic_name)
+        problems.sort(key = lambda problem:problem["topic"])
     elif choice == 4:
-        problems.sort(key = get_date)
+        problems.sort(key = lambda problem:problem["date"])
     else:
         print("Invalid Choice. Enter a Correct Choice. ")
     save_data(problems)
