@@ -16,7 +16,6 @@ def get_difficulty():
         if difficulty in ["easy", "medium", "hard"]:
             return difficulty
         print("Invalid Difficulty. Please Enter Easy, Medium or Hard.")
-
 def view_problems(problems):
     for problem in problems:
         print(problem)
@@ -106,21 +105,45 @@ def statistics(problems):
     hard = 0
     for problem in problems:
         if problem["difficulty"] == "easy":
-            easy = easy + 1
+            easy += 1
         elif  problem["difficulty"] == "medium" :
-            medium = medium + 1
+            medium += 1
         elif problem["difficulty"] == "hard" :
-            hard = hard + 1
+            hard += 1
     print("Total Problems Solved: ", total)        
     print("Easy Problems Solved: ", easy)
     print("Medium Problems Solved: ", medium)
     print("Hard Problems Solved: ", hard)
-
+def get_problem_name(problem):
+    return problem["problem_name"]
+def get_topic_name(problem):
+    return problem["topic"]
+def get_date(problem):
+    return problem["date"]
+def get_difficulty_name(problem):
+    difficulty_order = {"easy":1, "medium":2, "hard":3}
+    return difficulty_order[problem["difficulty"]]
+def sort_problems(problems):
+    choice = int(input("Sort By:\n1)Problem Name or 2)Difficulty or 3)Topic or 4)Date\n"))
+    if choice == 1:
+        problems.sort(key = get_problem_name)
+    elif choice == 2:
+        problems.sort(key = get_difficulty_name)
+    elif choice == 3:
+        problems.sort(key = get_topic_name)
+    elif choice == 4:
+        problems.sort(key = get_date)
+    else:
+        print("Invalid Choice. Enter a Correct Choice. ")
+    save_data(problems)
+    view_problems(problems)
+    
+    
 problems = load_data()
 while True:
     print("**MENU**")
     try:
-        choice = int(input("Enter your choice:\n1)Add a Problem or 2)View Problems or 3)Search Problems or 4)Delete Problem or 5)Edit a Problem or 6)Statistics or 7)Exit\n"))
+        choice = int(input("Enter your choice:\n1)Add a Problem or 2)View Problems or 3)Search Problems or 4)Delete Problem or 5)Edit a Problem or 6)Statistics or 7)Sort Problems or 8)Exit\n"))
         if choice == 1:
             add_problem(problems)
             save_data(problems)
@@ -135,6 +158,8 @@ while True:
         elif choice == 6:
             statistics(problems)
         elif choice == 7:
+            sort_problems(problems)
+        elif choice == 8:
             break
         else:
             print("Invalid Choice")
