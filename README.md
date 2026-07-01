@@ -79,11 +79,11 @@ python Main.py
 
 ### Main Menu
 
-![Main Menu](menu.png)
+![Main Menu](images/menu.png)
 
 ### Viewing Problems
 
-![View Problems](view.png)
+![View Problems](images/view.png)
 
 ---
 
