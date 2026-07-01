@@ -23,8 +23,8 @@ def view_problems(problems):
     for index , problem in enumerate(problems,start=1):
         print(index)
         print(problem)
-def save_data(problems):
-    with open(DATA_FILE, "w") as f:
+def save_data(problems , filename):
+    with open(filename, "w") as f:
         json.dump(problems,f)
 def load_data():
     try:
@@ -76,7 +76,7 @@ def delete_problem(problems):
             problems.remove(problem)    #From the Problems list remove the xyz problem dictionary
             print("Problem Has been Deleted")
             found = True
-            save_data(problems)
+            save_data(problems, DATA_FILE)
             break
     if not found:
         print("Problem Does not Exist")
@@ -99,7 +99,7 @@ def edit_problem(problems):
             elif choice == 4:
                 date = input("Enter the Updated Date of the Problem: ")
                 problem["date"] = date
-            save_data(problems)
+            save_data(problems, DATA_FILE)
             print("Problem updated successfully")
             break
 
@@ -136,16 +136,45 @@ def sort_problems(problems):
         problems.sort(key = lambda problem:problem["date"])
     else:
         print("Invalid Choice. Enter a Correct Choice. ")
-    save_data(problems)
+    save_data(problems, DATA_FILE)
     view_problems(problems)
+def get_topic():
+    topic_name = input("Name of the Topic: ")
+    topic_name = topic_name.lower()
+    topic_name = topic_name.strip()
+    return topic_name
+def export_problems(problems):
+    choice = int(input("***Export Problems***\n1)Export All\n2)Export by Difficulty\n3)Export by Topic\n4)Back\n"))
+    if choice == 1:
+        filename = "all_problems.json"
+        save_data(problems, filename)
+    elif choice == 2:
+        difficulty_name = get_difficulty()
+        filtered_problems = [
+            problem
+            for problem in problems
+            if difficulty_name == problem["difficulty"]
+        ]
+        filename = difficulty_name + "_problems.json"
+        save_data(filtered_problems, filename)
+    elif choice == 3:
+        topic_name = get_topic()
+        filtered_problems = [
+            problem
+            for problem in problems
+            if topic_name == problem["topic"]
+        ]
+        filename = topic_name + "_problems.json"
+        save_data(filtered_problems, filename)
+
 problems = load_data()
 while True:
     print("**MENU**")
     try:
-        choice = int(input("Enter your choice:\n1)Add a Problem or 2)View Problems or 3)Search Problems or 4)Delete Problem or 5)Edit a Problem or 6)Statistics or 7)Sort Problems or 8)Exit\n"))
+        choice = int(input("Enter your choice:\n1)Add a Problem or 2)View Problems or 3)Search Problems or 4)Delete Problem or 5)Edit a Problem or 6)Statistics or 7)Sort Problems or 8)Export Problems or 9)Exit\n"))
         if choice == 1:
             add_problem(problems)
-            save_data(problems)
+            save_data(problems , DATA_FILE)
         elif choice == 2:
             view_problems(problems)
         elif choice == 3:
@@ -159,6 +188,8 @@ while True:
         elif choice == 7:
             sort_problems(problems)
         elif choice == 8:
+            export_problems(problems)
+        elif choice == 9:
             break
         else:
             print("Invalid Choice")
