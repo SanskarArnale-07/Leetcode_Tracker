@@ -47,7 +47,7 @@ def load_data():
         return []
 def search_problems(problems):
     try:
-        choice = int(input("Enter your choice:\n1)Problem Name\n2)Difficulty\n3)Topic"))
+        choice = int(input("Enter your choice:\n1)Problem Name\n2)Difficulty\n3)Topic\n"))
         if choice == 1:
             problem_name = input("Enter the Name of the Problem: ")
             found = False
@@ -106,7 +106,7 @@ def edit_problem(problems):
     for problem in problems:
         if problem_name == problem["problem_name"]:
             found = True
-            choice = int(input("Enter your choice:\n1)Name:\n2)Difficulty\n3)Topic\n4)Date"))
+            choice = int(input("Enter your choice:\n1)Name:\n2)Difficulty\n3)Topic\n4)Date\n"))
             if choice == 1:
                 name = input("Enter the Updated Name of the Problem: ")
                 problem["problem_name"] = name
